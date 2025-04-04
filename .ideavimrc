@@ -1,15 +1,22 @@
-let mauve = '#cba6f7'
-let blue = '#89b4fa'
-let green = '#a6e3a1' 
-let red = '#f38ba8'
+set scrolloff=10
+set linenumber
+set showmode
+set showcmd
 
-set hlsearch
-set incsearch
-set ignorecase
 set smartcase
-set gdefault
-set NERDTree 
-set relativenumber
+set incsearch
+set hlsearch
+
+set visualbell
+set surround
+set highlightedyank
+set sneak
+set nerdtree
+
+
+" Easymotion settings
+set easymotion
+set notimeout
 
 " Don't use Ex mode, use Q for formatting.
 map Q gq
@@ -30,15 +37,9 @@ set showmode
 
 set quickscope
 
-" In insert or command mode, move by using Ctrl
-cnoremap <C-h> <Left>
-cnoremap <C-j> <Down>
-cnoremap <C-k> <Up>
-cnoremap <C-l> <Right>
-inoremap <C-h> <Left>
-inoremap <C-j> <Down>
-inoremap <C-k> <Up>
-inoremap <C-l> <Right>
+" Popup navigation
+inoremap <C-j> <Action>(PopupMenu-selectNext)
+inoremap <C-k> <Action>(PopupMenu-selectPrev)
 
 " Remove Arrow key
 noremap <Down> <NOP>
@@ -54,6 +55,10 @@ imap jk <Esc>
 " location
 nmap <C-i> <Action>(Back)
 nmap <C-o> <Action>(Forward)
+
+" Jump between methods
+nnoremap [[ <Action>(MethodUp)
+nnoremap ]] <Action>(MethodDown)
 
 " buffer (buffer < window < tab)
 nmap <leader>xx <Action>(CloseContent)
@@ -77,16 +82,9 @@ nmap <leader>8 <Action>(GoToTab8)
 nmap <leader>9 <Action>(GoToTab9)
 
 " tab
-map <leader>sh <Action>(MoveTabLeft)
-map <leader>sj <Action>(MoveTabDown)
-map <leader>sk <Action>(MoveTabUp)
-map <leader>sl <Action>(MoveTabRight)
-map <leader>sH <Action>(SplitHorizontally)
-map <leader>sV <Action>(SplitVertically)
+map <leader>sh <Action>(SplitHorizontally)
+map <leader>sv <Action>(SplitVertically)
 
-nmap <C-p> <Action>(JumpToLastWindow)
-nmap <M-i> <Action>(PrevSplitter)
-nmap <M-o> <Action>(NextSplitter)
 nmap <C-k> <C-w>k
 nmap <C-j> <C-w>j
 nmap <C-h> <C-w>h
@@ -124,15 +122,6 @@ nmap <leader>fp <Action>(FindInPath)
 nmap <leader>rp <Action>(ReplaceInPath)
 nmap <leader>sw <Action>($SearchWeb)
 
-" tag
-nmap <leader>fu <Action>(FindUsages)
-nmap <leader>fs <Action>(FileStructurePopup)
-nmap <leader>su <Action>(ShowUsages)
-nmap <leader>hl <Action>(HighlightUsagesInFile)
-nmap <leader>qp <Action>(QuickPreview)
-nmap <leader>qd <Action>(QuickDefinition)
-nmap <leader>qD <Action>(QuickTypeDefinition)
-
 " code
 map <leader>c <Action>(CommentByLineComment)
 map <leader>C <Action>(CommentByBlockComment)
@@ -146,12 +135,13 @@ nmap <leader>so <Action>(SelectAllOccurrences)
 nmap <leader>gc <Action>(Generate)
 nmap <leader>gt <Action>(GotoTest)
 
-" run
-nmap <leader>rc <Action>(ContextRun)
-nmap <leader>rx <Action>(chooseRunConfiguration)
-nmap <leader>rr <Action>(Rerun)
-nmap <leader>rt <Action>(RunTests)
-nmap <leader>rs <Action>(Stop)
+
+" Open NERDTree (use q to exit)
+map <leader>e :NERDTreeToggle<CR>
+
+" File navigation
+map <leader>ff <action>(GotoFile)
+map <leader>fr <action>(RecentFiles)
 
 " debug
 nmap <leader>dc <Action>(ContextDebug)
@@ -183,20 +173,6 @@ nmap zA <Action>(ExpandAllRegions)
 
 " zen
 nmap <leader>z <Action>(ToggleZenMode)
-
-" []
-nmap [b <Action>(PreviousTab)
-nmap ]b <Action>(NextTab)
-nmap [g <Action>(GotoPreviousError)
-nmap ]g <Action>(GotoNextError)
-nmap [u <Action>(GotoPrevElementUnderCaretUsage)
-nmap ]u <Action>(GotoNextElementUnderCaretUsage)
-nmap [o <Action>(PreviousOccurence)
-nmap ]o <Action>(NextOccurence)
-nmap [m <Action>(MethodUp)
-nmap ]m <Action>(MethodDown)
-nmap [c <Action>(JumpToLastChange)
-nmap ]c <Action>(JumpToNextChange)
 
 " goto
 nmap <leader>a <Action>(GotoAction)
@@ -239,6 +215,9 @@ nmap <leader>v <Action>(VcsGroups)
 " open IdeaVim settings
 nmap \\v <Action>(VimActions)
 
+" Errors
+map <leader>en <Action>(ReSharperGotoNextErrorInSolution)
+map <leader>ep <Action>(ReSharperGotoPrevErrorInSolution)
 
 command! -nargs=* Replace call Replace(<f-args>)
 
@@ -257,7 +236,7 @@ Plug 'machakann/vim-highlightedyank'
 " highlight yank (bundle plugin)
 set highlightedyank
 let g:highlightedyank_highlight_duration = "1000"
-let g:highlightedyank_highlight_color = "rgba(57, 197, 187, 155)"
+let g:highlightedyank_highlight_color = "rgba(187, 147, 249, 155)"
 " Commentary plugin
 Plug 'tpope/vim-commentary'
 
